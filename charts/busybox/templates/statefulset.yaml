@@ -19,7 +19,7 @@ spec:
           - sh
           - -c
           - >
-            sleep 30; exit 1  # sleep infinity
+            sleep infinity # 30; exit 1  # sleep infinity
         livenessProbe:
           exec:
             command:
