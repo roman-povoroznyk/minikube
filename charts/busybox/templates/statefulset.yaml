@@ -1,45 +1,37 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: busybox
+  name: nginx
 spec:
-  replicas: 1
+  serviceName: nginx
   selector:
     matchLabels:
-      app: busybox
+      app: nginx
   template:
     metadata:
       labels:
-        app: busybox
+        app: nginx
     spec:
       containers:
-      - name: busybox
-        image: busybox
-        command:
-          - sh
-          - -c
-          - >
-            sleep infinity # 30; exit 1  # sleep infinity
-        livenessProbe:
-          exec:
-            command:
-            - cat
-            - /tmp/healthy
-          initialDelaySeconds: 10
-          periodSeconds: 5
+      - name: nginx
+        image: nginx:1.21
+        ports:
+        - containerPort: 80
         readinessProbe:
-          exec:
-            command:
-            - cat
-            - /tmp/healthy
+          httpGet:
+            path: /
+            port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
-        volumeMounts:
-        - name: busybox
-          mountPath: /data
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
   volumeClaimTemplates:
   - metadata:
-      name: busybox
+      name: nginx
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
