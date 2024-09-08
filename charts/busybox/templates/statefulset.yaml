@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.21
+        image: nginx:foo
         ports:
         - containerPort: 80
         readinessProbe:
@@ -30,7 +30,7 @@ spec:
             port: 80
           initialDelaySeconds: 10
           periodSeconds: 10
-  podManagementPolicy: Parallel
+  # podManagementPolicy: Parallel
   volumeClaimTemplates:
   - metadata:
       name: nginx
