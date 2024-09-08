@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:foo
+        image: nginx:1.21
         ports:
         - containerPort: 80
         readinessProbe:
