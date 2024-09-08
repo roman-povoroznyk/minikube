@@ -4,7 +4,7 @@ metadata:
   name: nginx
 spec:
   serviceName: nginx
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: nginx
@@ -30,7 +30,7 @@ spec:
             port: 80
           initialDelaySeconds: 10
           periodSeconds: 10
-  # podManagementPolicy: Parallel
+  podManagementPolicy: Parallel
   volumeClaimTemplates:
   - metadata:
       name: nginx
