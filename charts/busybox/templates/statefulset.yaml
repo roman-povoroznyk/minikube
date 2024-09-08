@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.21
+        image: nginx:foo
         ports:
         - containerPort: 80
         readinessProbe:
@@ -34,7 +34,7 @@ spec:
   updateStrategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 50%
+      maxUnavailable: 100%
   volumeClaimTemplates:
   - metadata:
       name: nginx
