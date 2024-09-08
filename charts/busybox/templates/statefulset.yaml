@@ -4,6 +4,7 @@ metadata:
   name: nginx
 spec:
   serviceName: nginx
+  replicas: 2
   selector:
     matchLabels:
       app: nginx
@@ -29,6 +30,11 @@ spec:
             port: 80
           initialDelaySeconds: 10
           periodSeconds: 10
+  podManagementPolicy: Parallel
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
   volumeClaimTemplates:
   - metadata:
       name: nginx
@@ -37,20 +43,20 @@ spec:
       resources:
         requests:
           storage: 1Gi
----
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: delete-failed-nginx
-  annotations:
-    argocd.argoproj.io/hook: PostSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded
-spec:
-  template:
-    spec:
-      containers:
-      - name: kubectl
-        image: bitnami/kubectl:latest
-        command: ["kubectl", "delete", "pod", "-l", "app=nginx"]
-      restartPolicy: Never
-  backoffLimit: 4
+# ---
+# apiVersion: batch/v1
+# kind: Job
+# metadata:
+#   name: delete-failed-nginx
+#   annotations:
+#     argocd.argoproj.io/hook: PostSync
+#     argocd.argoproj.io/hook-delete-policy: HookSucceeded
+# spec:
+#   template:
+#     spec:
+#       containers:
+#       - name: kubectl
+#         image: bitnami/kubectl:latest
+#         command: ["kubectl", "delete", "pod", "-l", "app=nginx"]
+#       restartPolicy: Never
+#   backoffLimit: 4
