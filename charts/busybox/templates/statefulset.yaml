@@ -4,9 +4,6 @@ metadata:
   name: nginx
 spec:
   serviceName: nginx
-  podManagementPolicy: Parallel
-  updateStrategy:
-    type: OnDelete 
   selector:
     matchLabels:
       app: nginx
