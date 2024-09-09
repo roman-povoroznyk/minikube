@@ -30,7 +30,7 @@ spec:
             port: 80
           initialDelaySeconds: 10
           periodSeconds: 10
-  podManagementPolicy: Parallel
+  # podManagementPolicy: Parallel
   volumeClaimTemplates:
   - metadata:
       name: nginx
